@@ -8,7 +8,7 @@
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts"
   },
-  "author": "Youssef ACHCHIRAJ",
+  "author": "youssef_achchiraj",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.14.2",
