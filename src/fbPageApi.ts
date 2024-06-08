@@ -16,7 +16,7 @@ export class FbPageApi {
     this.appSecret = app_secret;
   }
 
-  async facebookExchangeToken(shortAccessToken: string) {
+  async exchangeToken(shortAccessToken: string) {
     try {
       const { data } = await fbRequest.get(
         `${this.appVersion}/oauth/access_token`,
@@ -37,7 +37,7 @@ export class FbPageApi {
     }
   }
 
-  async facebookUserInfoApi(
+  async userInfo(
     accessToken: string,
     fields: string = "name,picture"
   ) {
@@ -51,7 +51,7 @@ export class FbPageApi {
     }
   }
 
-  async facebookShareTextPostToPage(
+  async shareTextPostToPage(
     pageAccessToken: string,
     payload: ITextPostFbPayload,
     pageId: string
@@ -70,7 +70,7 @@ export class FbPageApi {
     }
   }
 
-  async facebookAccountPages(
+  async accountPages(
     access_token: string,
     fields: string = "picture, category_list,category, tasks, name, access_token"
   ) {
@@ -87,7 +87,7 @@ export class FbPageApi {
     }
   }
 
-  async facebookPagePostsReactions(
+  async pagePostsReactions(
     pageId: string,
     pageAccessToken: string,
     date_preset: PageInsightsDatePreset = PageInsightsDatePreset.this_year,
@@ -112,7 +112,7 @@ export class FbPageApi {
     }
   }
 
-  async facebookPagePosts(
+  async pagePosts(
     pageId: string,
     pageAccessToken: string,
     fields: string = "full_picture,message,permalink_url,created_time,likes.summary(true),comments.summary(true),shares"
@@ -134,7 +134,7 @@ export class FbPageApi {
     }
   }
 
-  async facebookPageScheduledPosts(
+  async pageScheduledPosts(
     pageId: string,
     pageAccessToken: string,
     fields: string = "full_picture,message,permalink_url,created_time, likes.summary(true),comments.summary(true),shares"
@@ -158,7 +158,7 @@ export class FbPageApi {
     }
   }
 
-  async facebookPageLikes(pageId: string, pageAccessToken: string) {
+  async pageLikes(pageId: string, pageAccessToken: string) {
     try {
       const {
         data: { fan_count },
@@ -174,7 +174,7 @@ export class FbPageApi {
     }
   }
 
-  async facebookPageAnalytics(
+  async pageAnalytics(
     pageId: string,
     pageAccessToken: string,
     date_preset: PageInsightsDatePreset = PageInsightsDatePreset.this_year,
@@ -197,7 +197,7 @@ export class FbPageApi {
     }
   }
 
-  async facebookPageWeeklyStats(
+  async pageWeeklyStats(
     pageId: string,
     pageAccessToken: string,
     date_preset: PageInsightsDatePreset = PageInsightsDatePreset.last_week_mon_sun,
@@ -221,7 +221,7 @@ export class FbPageApi {
     }
   }
 
-  async deleteFacebookPagePost(postId: string, pageAccessToken: string) {
+  async deletePagePost(postId: string, pageAccessToken: string) {
     try {
       const { data } = await fbRequest.delete(postId, {
         params: {
@@ -234,7 +234,7 @@ export class FbPageApi {
     }
   }
 
-  async facebookPagePostComments(
+  async pagePostComments(
     pagePostId: string,
     pageAccessToken: string,
     fields: string = "from,message"
@@ -254,7 +254,7 @@ export class FbPageApi {
     }
   }
 
-  async facebookDeleteComment(commentId: string, pageAccessToken: string) {
+  async deleteComment(commentId: string, pageAccessToken: string) {
     try {
       const { data } = await fbRequest.delete(`${commentId}`, {
         params: {
@@ -266,7 +266,7 @@ export class FbPageApi {
       throw new Error("Uh oh!, failed delete this comment, details error: " + error);
     }
   }
-  async replyOnFacebookComment(
+  async replyOnComment(
     commentId: string,
     pageAccessToken: string,
     reply: string

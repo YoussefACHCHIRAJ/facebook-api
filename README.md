@@ -1,13 +1,13 @@
-# YS-FACEBOOK-API
+# @achchiraj/facebook-api
 
-The ys-facebook-api is a package designed to simplify interactions with the Facebook Graph API. It provides pre-defined packages for commonly used functionalities and enums for frequently used metrics and periods.
+The facebook-api is a package designed to simplify interactions with the Facebook Graph API. It provides pre-defined packages for commonly used functionalities and enums for frequently used metrics and periods.
 
 ## Installation
 
 Install the package via npm:
 
 ```bash
-npm install ys-facebook-api-1
+npm install @achchiraj/facebook-api
 ```
 
 ## Example of usage
@@ -21,12 +21,12 @@ const app = express();
 const fbApi = new FbPageApi('v19.0', 'your-app-id', 'your-app-secret');
 
 // Define a route to test the package
-app.get('/test-my-package/:accessToken', async (req, res) => {
+app.get('/myEndpoint/:accessToken', async (req, res) => {
     try {
         const { accessToken } = req.params;
         
         // Call the facebookUserInfoApi method with the provided access token
-        const userInfos = await fbApi.facebookUserInfoApi(accessToken);
+        const userInfos = await fbApi.userInfo(accessToken);
         
         // Log the user information to the console
         console.log(userInfos);
@@ -48,7 +48,7 @@ app.listen(3000, () => {
 ## Available Functions
 
 ```javascript 
-facebookExchangeToken(shortAccessToken: string)
+exchangeToken(shortAccessToken: string)
 ```
 
 Exchange a short-lived access token for a long-lived one.
@@ -56,7 +56,7 @@ Exchange a short-lived access token for a long-lived one.
 - `shortAccessToken`: Short-lived access token to exchange.
 
 ```javascript 
-facebookUserInfoApi(accessToken: string, fields?: string)
+userInfo(accessToken: string, fields?: string)
 ```
 
 Fetch user information from Facebook.
@@ -65,7 +65,7 @@ Fetch user information from Facebook.
 - `fields`: Fields to retrieve (default: "name,picture").
 
 ```javascript 
-facebookShareTextPostToPage(pageAccessToken: string, payload: ITextPostFbPayload, pageId: string)
+shareTextPostToPage(pageAccessToken: string, payload: ITextPostFbPayload, pageId: string)
 ```
 
 Share a text post to a Facebook page.
@@ -85,7 +85,7 @@ const payload = {
 ```
 
 ```javascript 
-facebookAccountPages(access_token: string, fields?: string)
+accountPages(access_token: string, fields?: string)
 ```
 
 Get information about the Facebook pages associated with the user.
@@ -95,7 +95,7 @@ Get information about the Facebook pages associated with the user.
 
 
 ```javascript 
-facebookPagePostsReactions(pageId: string, pageAccessToken: string, date_preset?: PageInsightsDatePreset period?: PageInsightsPeriod, metric?: string)
+pagePostsReactions(pageId: string, pageAccessToken: string, date_preset?: PageInsightsDatePreset period?: PageInsightsPeriod, metric?: string)
 ```
 
 Get reactions to posts on a Facebook page.
@@ -108,7 +108,7 @@ Get reactions to posts on a Facebook page.
 
 
 ```javascript 
-facebookPagePosts(pageId: string, pageAccessToken: string, fields?: string)
+pagePosts(pageId: string, pageAccessToken: string, fields?: string)
 ```
 
 Get posts from a Facebook page.
@@ -118,7 +118,7 @@ Get posts from a Facebook page.
 - `fields`: Fields to retrieve (default: "full_picture,message,permalink_url,created_time,likes.summary(true),comments.summary(true),shares").
 
 ```javascript 
-facebookPageScheduledPosts(pageId: string, pageAccessToken: string, fields?: string)
+pageScheduledPosts(pageId: string, pageAccessToken: string, fields?: string)
 ```
 
 Get scheduled posts from a Facebook page.
@@ -128,7 +128,7 @@ Get scheduled posts from a Facebook page.
 - `fields`: Fields to retrieve (default: "full_picture,message,permalink_url,created_time, likes.summary(true),comments.summary(true),shares").
 
 ```javascript 
-facebookPageLikes(pageId: string, pageAccessToken: string)
+pageLikes(pageId: string, pageAccessToken: string)
 ```
 
 Get the number of likes on a Facebook page.
@@ -137,7 +137,7 @@ Get the number of likes on a Facebook page.
 - `pageAccessToken`: Access token of the page.
 
 ```javascript 
-facebookPageAnalytics(pageId: string, pageAccessToken: string, date_preset?: PageInsightsDatePreset, period?: PageInsightsPeriod)
+pageAnalytics(pageId: string, pageAccessToken: string, date_preset?: PageInsightsDatePreset, period?: PageInsightsPeriod)
 ```
 
 Get analytics for a Facebook page.
@@ -148,7 +148,7 @@ Get analytics for a Facebook page.
 - `period`: Period for insights (default: `PageInsightsPeriod.month`).
 
 ```javascript 
-facebookPageWeeklyStats(pageId: string, pageAccessToken: string, date_preset?: PageInsightsDatePreset, period?: PageInsightsPeriod, metric?: string)
+pageWeeklyStats(pageId: string, pageAccessToken: string, date_preset?: PageInsightsDatePreset, period?: PageInsightsPeriod, metric?: string)
 ```
 
 Get weekly statistics for a Facebook page.
@@ -169,7 +169,7 @@ Delete a post from a Facebook page.
 - `pageAccessToken`: Access token of the page.
 
 ```javascript 
-facebookPagePostComments(pagePostId: string, pageAccessToken: string, fields?: string)
+pagePostComments(pagePostId: string, pageAccessToken: string, fields?: string)
 ```
 
 Get comments on a post from a Facebook page.
@@ -179,7 +179,7 @@ Get comments on a post from a Facebook page.
 - `fields`: Fields to retrieve for comments (default: "from,message").
 
 ```javascript 
-facebookDeleteComment(commentId: string, pageAccessToken: string)
+deleteComment(commentId: string, pageAccessToken: string)
 ```
 
 Delete a comment from a post on a Facebook page.

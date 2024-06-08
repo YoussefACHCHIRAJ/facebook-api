@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "simplify the interaction with facebook api graph",
   "main": "dist/index.js",
-  "repository": "https://github.com/YoussefACHCHIRAJ/ys-facebook-api.git",
+  "repository": "https://github.com/YoussefACHCHIRAJ/facebook-api.git",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
