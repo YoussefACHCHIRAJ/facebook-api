@@ -1,2 +1,4 @@
-export { FbPageApi } from './fbPageApi'
-export * from './enums';
+import { PageInsightsDatePreset, PageInsightsPeriod } from './enums';
+import { FbPageApi } from './fbPageApi';
+
+export { FbPageApi, PageInsightsDatePreset, PageInsightsPeriod }

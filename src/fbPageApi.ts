@@ -7,9 +7,9 @@ const fbRequest = axios.create({
 });
 
 export class FbPageApi {
-  appVersion: string;
-  appId: string;
-  appSecret: string;
+  private appVersion: string;
+  private appId: string;
+  private appSecret: string;
   constructor(app_api_version: string, app_id: string, app_secret: string) {
     this.appVersion = app_api_version;
     this.appId = app_id;

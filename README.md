@@ -47,20 +47,26 @@ app.listen(3000, () => {
 ```
 ## Available Functions
 
-### `facebookExchangeToken(shortAccessToken: string)`
+```javascript 
+facebookExchangeToken(shortAccessToken: string)
+```
 
 Exchange a short-lived access token for a long-lived one.
 
 - `shortAccessToken`: Short-lived access token to exchange.
 
-### `facebookUserInfoApi(accessToken: string, fields?: string)`
+```javascript 
+facebookUserInfoApi(accessToken: string, fields?: string)
+```
 
 Fetch user information from Facebook.
 
 - `accessToken`: Access token of the user.
 - `fields`: Fields to retrieve (default: "name,picture").
 
-### `facebookShareTextPostToPage(pageAccessToken: string, payload: ITextPostFbPayload, pageId: string)`
+```javascript 
+facebookShareTextPostToPage(pageAccessToken: string, payload: ITextPostFbPayload, pageId: string)
+```
 
 Share a text post to a Facebook page.
 
@@ -78,14 +84,19 @@ const payload = {
 };
 ```
 
-### `facebookAccountPages(access_token: string, fields?: string)`
+```javascript 
+facebookAccountPages(access_token: string, fields?: string)
+```
 
 Get information about the Facebook pages associated with the user.
 
 - `access_token`: Access token of the user.
 - `fields`: Fields to retrieve (default: "picture, category_list,category, tasks, name, access_token").
 
-### `facebookPagePostsReactions(pageId: string, pageAccessToken: string, date_preset?: PageInsightsDatePreset period?: PageInsightsPeriod, metric?: string)`
+
+```javascript 
+facebookPagePostsReactions(pageId: string, pageAccessToken: string, date_preset?: PageInsightsDatePreset period?: PageInsightsPeriod, metric?: string)
+```
 
 Get reactions to posts on a Facebook page.
 
@@ -95,7 +106,10 @@ Get reactions to posts on a Facebook page.
 - `period`: Period for insights (default: `PageInsightsPeriod.week`).
 - `metric`: Metrics to retrieve (default: "page_actions_post_reactions_like_total, page_actions_post_reactions_love_total, page_actions_post_reactions_wow_total").
 
-### `facebookPagePosts(pageId: string, pageAccessToken: string, fields?: string)`
+
+```javascript 
+facebookPagePosts(pageId: string, pageAccessToken: string, fields?: string)
+```
 
 Get posts from a Facebook page.
 
@@ -103,7 +117,9 @@ Get posts from a Facebook page.
 - `pageAccessToken`: Access token of the page.
 - `fields`: Fields to retrieve (default: "full_picture,message,permalink_url,created_time,likes.summary(true),comments.summary(true),shares").
 
-### `facebookPageScheduledPosts(pageId: string, pageAccessToken: string, fields?: string)`
+```javascript 
+facebookPageScheduledPosts(pageId: string, pageAccessToken: string, fields?: string)
+```
 
 Get scheduled posts from a Facebook page.
 
@@ -111,14 +127,18 @@ Get scheduled posts from a Facebook page.
 - `pageAccessToken`: Access token of the page.
 - `fields`: Fields to retrieve (default: "full_picture,message,permalink_url,created_time, likes.summary(true),comments.summary(true),shares").
 
-### `facebookPageLikes(pageId: string, pageAccessToken: string)`
+```javascript 
+facebookPageLikes(pageId: string, pageAccessToken: string)
+```
 
 Get the number of likes on a Facebook page.
 
 - `pageId`: ID of the Facebook page.
 - `pageAccessToken`: Access token of the page.
 
-### `facebookPageAnalytics(pageId: string, pageAccessToken: string, date_preset?: PageInsightsDatePreset, period?: PageInsightsPeriod)`
+```javascript 
+facebookPageAnalytics(pageId: string, pageAccessToken: string, date_preset?: PageInsightsDatePreset, period?: PageInsightsPeriod)
+```
 
 Get analytics for a Facebook page.
 
@@ -127,7 +147,9 @@ Get analytics for a Facebook page.
 - `date_preset`: Date preset for insights (default: `PageInsightsDatePreset.this_year`).
 - `period`: Period for insights (default: `PageInsightsPeriod.month`).
 
-### `facebookPageWeeklyStats(pageId: string, pageAccessToken: string, date_preset?: PageInsightsDatePreset, period?: PageInsightsPeriod, metric?: string)`
+```javascript 
+facebookPageWeeklyStats(pageId: string, pageAccessToken: string, date_preset?: PageInsightsDatePreset, period?: PageInsightsPeriod, metric?: string)
+```
 
 Get weekly statistics for a Facebook page.
 
@@ -137,14 +159,18 @@ Get weekly statistics for a Facebook page.
 - `period`: Period for insights (default: `PageInsightsPeriod.day`).
 - `metric`: Metrics to retrieve (default: "page_post_engagements,page_impressions,page_daily_follows_unique").
 
-### `deleteFacebookPagePost(postId: string, pageAccessToken: string)`
+```javascript 
+deleteFacebookPagePost(postId: string, pageAccessToken: string)
+```
 
 Delete a post from a Facebook page.
 
 - `postId`: ID of the post to delete.
 - `pageAccessToken`: Access token of the page.
 
-### `facebookPagePostComments(pagePostId: string, pageAccessToken: string, fields?: string)`
+```javascript 
+facebookPagePostComments(pagePostId: string, pageAccessToken: string, fields?: string)
+```
 
 Get comments on a post from a Facebook page.
 
@@ -152,14 +178,18 @@ Get comments on a post from a Facebook page.
 - `pageAccessToken`: Access token of the page.
 - `fields`: Fields to retrieve for comments (default: "from,message").
 
-### `facebookDeleteComment(commentId: string, pageAccessToken: string)`
+```javascript 
+facebookDeleteComment(commentId: string, pageAccessToken: string)
+```
 
 Delete a comment from a post on a Facebook page.
 
 - `commentId`: ID of the comment to delete.
 - `pageAccessToken`: Access token of the page.
 
-### `replyOnFacebookComment(commentId: string, pageAccessToken: string, reply: string)`
+```javascript 
+replyOnFacebookComment(commentId: string, pageAccessToken: string, reply: string)
+```
 
 Reply to a comment on a post on a Facebook page.
 
