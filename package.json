@@ -1,6 +1,6 @@
 {
   "name": "ys-facebook-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "simplify the interaction with facebook api graph",
   "main": "src/index.ts",
   "scripts": {
