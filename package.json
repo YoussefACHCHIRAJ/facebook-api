@@ -1,8 +1,9 @@
 {
-  "name": "ys-facebook-api",
+  "name": "ys-facebook-api-1",
   "version": "1.0.1",
   "description": "simplify the interaction with facebook api graph",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "repository": "https://github.com/YoussefACHCHIRAJ/ys-facebook-api.git",
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
@@ -16,5 +17,10 @@
   },
   "dependencies": {
     "axios": "^1.7.2"
-  }
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ]
 }
