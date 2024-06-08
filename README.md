@@ -12,7 +12,7 @@ npm install ys-facebook-api-1
 
 ## Example of usage
 
-```code
+```javascript
 const express = require('express');
 const { FbPageApi } = require('ys-facebook-api-1');
 const app = express();
