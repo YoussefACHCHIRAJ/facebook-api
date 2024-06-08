@@ -1,6 +1,6 @@
 {
   "name": "@achchiraj/facebook-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "simplify the interaction with facebook api graph",
   "main": "dist/index.js",
   "repository": "https://github.com/YoussefACHCHIRAJ/facebook-api.git",
