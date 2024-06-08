@@ -1,6 +1,6 @@
 {
-  "name": "ys-facebook-api-1",
-  "version": "1.0.4",
+  "name": "@achchiraj/facebook-api",
+  "version": "1.0.0",
   "description": "simplify the interaction with facebook api graph",
   "main": "dist/index.js",
   "repository": "https://github.com/YoussefACHCHIRAJ/ys-facebook-api.git",
