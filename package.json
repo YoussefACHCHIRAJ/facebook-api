@@ -1,5 +1,5 @@
 {
-  "name": "facebook-api",
+  "name": "ys-facebook-api",
   "version": "1.0.0",
   "description": "simplify the interaction with facebook api graph",
   "main": "src/index.ts",
