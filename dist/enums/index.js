@@ -1,0 +1,35 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PageInsightsPeriod = exports.PageInsightsDatePreset = void 0;
+var PageInsightsDatePreset;
+(function (PageInsightsDatePreset) {
+    PageInsightsDatePreset["today"] = "today";
+    PageInsightsDatePreset["yesterday"] = "yesterday";
+    PageInsightsDatePreset["this_month"] = "this_month";
+    PageInsightsDatePreset["last_month"] = "last_month";
+    PageInsightsDatePreset["this_quarter"] = "this_quarter";
+    PageInsightsDatePreset["maximum"] = "maximum";
+    PageInsightsDatePreset["data_maximum"] = "data_maximum";
+    PageInsightsDatePreset["last_3d"] = "last_3d";
+    PageInsightsDatePreset["last_7d"] = "last_7d";
+    PageInsightsDatePreset["last_14d"] = "last_14d";
+    PageInsightsDatePreset["last_28d"] = "last_28d";
+    PageInsightsDatePreset["last_30d"] = "last_30d";
+    PageInsightsDatePreset["last_90d"] = "last_90d";
+    PageInsightsDatePreset["last_week_mon_sun"] = "last_week_mon_sun";
+    PageInsightsDatePreset["last_week_sun_sat"] = "last_week_sun_sat";
+    PageInsightsDatePreset["last_quarter"] = "last_quarter";
+    PageInsightsDatePreset["last_year"] = "last_year";
+    PageInsightsDatePreset["this_week_mon_today"] = "this_week_mon_today";
+    PageInsightsDatePreset["this_week_sun_today"] = "this_week_sun_today";
+    PageInsightsDatePreset["this_year"] = "this_year";
+})(PageInsightsDatePreset || (exports.PageInsightsDatePreset = PageInsightsDatePreset = {}));
+var PageInsightsPeriod;
+(function (PageInsightsPeriod) {
+    PageInsightsPeriod["day"] = "day";
+    PageInsightsPeriod["week"] = "week";
+    PageInsightsPeriod["days_28"] = "days_28";
+    PageInsightsPeriod["month"] = "month";
+    PageInsightsPeriod["lifetime"] = "lifetime";
+    PageInsightsPeriod["total_over_range"] = "total_over_range";
+})(PageInsightsPeriod || (exports.PageInsightsPeriod = PageInsightsPeriod = {}));
