@@ -6,14 +6,25 @@ const fbRequest = axios.create({
   baseURL: "https://graph.facebook.com/",
 });
 
-export class FbPageApi {
-  private appVersion: string;
+export class FacebookPageApi {
   private appId: string;
   private appSecret: string;
-  constructor(app_api_version: string, app_id: string, app_secret: string) {
-    this.appVersion = app_api_version;
+  private appVersion: string;
+
+  constructor(
+    app_id: string,
+    app_secret: string,
+    app_api_version: string = "v19.0"
+  ) {
+    if (!app_id) {
+      throw new Error("App id is required");
+    }
+    if (!app_secret) {
+      throw new Error("App secret is required");
+    }
     this.appId = app_id;
     this.appSecret = app_secret;
+    this.appVersion = app_api_version;
   }
 
   async exchangeToken(shortAccessToken: string) {
@@ -37,10 +48,7 @@ export class FbPageApi {
     }
   }
 
-  async userInfo(
-    accessToken: string,
-    fields: string = "name,picture"
-  ) {
+  async userInfo(accessToken: string, fields: string = "name,picture") {
     try {
       const { data } = await fbRequest.get("me", {
         params: { access_token: accessToken, fields },
@@ -66,7 +74,9 @@ export class FbPageApi {
       );
       return data;
     } catch (error) {
-      throw new Error("Uh oh!, failed to share text post, details error: " + error);
+      throw new Error(
+        "Uh oh!, failed to share text post, details error: " + error
+      );
     }
   }
 
@@ -81,9 +91,11 @@ export class FbPageApi {
           fields,
         },
       });
-      return data;
+      return data?.data;
     } catch (error) {
-      throw new Error("Uh oh!, failed get pages infos, details error: " + error);
+      throw new Error(
+        "Uh oh!, failed get pages infos, details error: " + error
+      );
     }
   }
 
@@ -130,7 +142,9 @@ export class FbPageApi {
 
       return data;
     } catch (error) {
-      throw new Error("Uh oh!, failed get page's posts, details error: " + error);
+      throw new Error(
+        "Uh oh!, failed get page's posts, details error: " + error
+      );
     }
   }
 
@@ -170,7 +184,9 @@ export class FbPageApi {
       });
       return fan_count;
     } catch (error) {
-      throw new Error("Uh oh!, failed get page likes count, details error: " + error);
+      throw new Error(
+        "Uh oh!, failed get page likes count, details error: " + error
+      );
     }
   }
 
@@ -193,7 +209,9 @@ export class FbPageApi {
       );
       return data;
     } catch (error) {
-      throw new Error("Uh oh!, failed get page's analytics, details error: " + error);
+      throw new Error(
+        "Uh oh!, failed get page's analytics, details error: " + error
+      );
     }
   }
 
@@ -230,7 +248,9 @@ export class FbPageApi {
       });
       return data;
     } catch (error) {
-      throw new Error("Uh oh!, failed delete page post, details error: " + error);
+      throw new Error(
+        "Uh oh!, failed delete page post, details error: " + error
+      );
     }
   }
 
@@ -263,7 +283,9 @@ export class FbPageApi {
       });
       return data.data;
     } catch (error) {
-      throw new Error("Uh oh!, failed delete this comment, details error: " + error);
+      throw new Error(
+        "Uh oh!, failed delete this comment, details error: " + error
+      );
     }
   }
   async replyOnComment(
@@ -284,7 +306,8 @@ export class FbPageApi {
       return data.data;
     } catch (error) {
       throw new Error(
-        "Uh oh!, failed failed to reply on this comment, details error: " + error
+        "Uh oh!, failed failed to reply on this comment, details error: " +
+          error
       );
     }
   }

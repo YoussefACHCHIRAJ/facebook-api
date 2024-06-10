@@ -1,4 +1,12 @@
-import { PageInsightsDatePreset, PageInsightsPeriod } from './enums';
-import { FbPageApi } from './fbPageApi';
+import { PageInsightsDatePreset, PageInsightsPeriod } from "./enums";
+import { FacebookPageApi as FbPageApi } from "./FacebookPageApi";
 
-export { FbPageApi, PageInsightsDatePreset, PageInsightsPeriod }
+const facebookPageApi = (
+  appId: string,
+  appSecret: string,
+  appVersion?: string
+) => {
+  return new FbPageApi(appId, appSecret, appVersion);
+};
+
+export { facebookPageApi, PageInsightsDatePreset, PageInsightsPeriod };

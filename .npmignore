@@ -5,5 +5,10 @@ node_modules/
 karma.conf.js
 spec/
 
+.env
+.env.development
+.env.production
 # Ignore the entire src directory
 src/
+# Ignore the entire tests directory
+tests/

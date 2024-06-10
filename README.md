@@ -13,12 +13,10 @@ npm install @achchiraj/facebook-api
 ## Example of usage
 
 ```javascript
-const express = require('express');
-const { FbPageApi } = require('ys-facebook-api-1');
-const app = express();
+const { facebookPageApi } = require('@achchiraj/facebook-api');
 
 // Create an instance of FbPageApi
-const fbApi = new FbPageApi('v19.0', 'your-app-id', 'your-app-secret');
+const fbApi = facebookPageApi('your-app-id', 'your-app-secret', 'optional-api-version');
 
 // Call the userInfoApi method with the access token
 const userInfos = await fbApi.userInfo(accessToken);
