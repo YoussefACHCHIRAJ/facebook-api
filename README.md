@@ -20,27 +20,17 @@ const app = express();
 // Create an instance of FbPageApi
 const fbApi = new FbPageApi('v19.0', 'your-app-id', 'your-app-secret');
 
-// Define a route to test the package
-app.get('/myEndpoint/:accessToken', async (req, res) => {
-    try {
-        const { accessToken } = req.params;
-        
-        // Call the facebookUserInfoApi method with the provided access token
-        const userInfos = await fbApi.userInfo(accessToken);
-        
-        // Log the user information to the console
-        console.log(userInfos);
-        
-        // Send a response to the client
-        res.send('Endpoint executed successfully');
-    } catch (error) {
-        // Handle errors
-        console.error('Error:', error.message);
-        res.status(500).send('An error occurred');
-    }
-});
+// Call the userInfoApi method with the access token
+const userInfos = await fbApi.userInfo(accessToken);
+// Log the user information to the console
+console.log(userInfos);
 
-// Start the Express server
+// Call the accountPages method with the access token and the fields needed
+const facebookPages = await fbApi.accountPages(accessToken, "picture, name, access_token");
+// Log the facebook pages
+console.log(facebookPages);
+        
+
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
