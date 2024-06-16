@@ -1,4 +1,4 @@
-import { FacebookPageApi } from "../src/FacebookPageApi";
+import { FacebookPageApi } from "../src";
 import dotenv from "dotenv";
 import {  describe } from "node:test";
 
