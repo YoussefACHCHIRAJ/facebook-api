@@ -15,9 +15,6 @@ npm install @achchiraj/facebook-api
 ```javascript
 const { FacebookPageApi } = require("@achchiraj/facebook-api");
 
-// Create an instance of FbPageApi
-// const fbApi = facebookPageApi('your-app-id', 'your-app-secret', 'optional-api-version');
-
 // Call the userInfo method with the access token
 const userInfos = await FacebookPageApi.userInfo(accessToken);
 // Log the user information to the console
