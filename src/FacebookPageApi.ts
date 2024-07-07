@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ITextPostFbPayload } from "./types/PageApi.types";
+import { IFbPageReviews, ITextPostFbPayload } from "./types/PageApi.types";
 import { PageInsightsDatePreset, PageInsightsPeriod } from "./enums";
 
 const fbRequest = axios.create({
@@ -76,6 +76,39 @@ export class FacebookPageApi {
   //* end Personal account apis
 
   //* start Facebook Page apis
+  static async pageDetails(pageId: string, access_token: string, fields: string = 'about,attire,bio,location,parking,hours,emails,website') {
+    try {
+      const { data } = await fbRequest.get(`${pageId}`, {
+        params: {
+          fields,
+          access_token
+        }
+      });
+      return data;
+    } catch (error: any) {
+      const errorMessage = error?.response?.data?.error?.message || error;
+      throw new Error(
+        "Uh oh!, failed get page Details. Error details: " + errorMessage
+      );
+    }
+  }
+
+  static async pageReviews(pageId: string, access_token: string): Promise<IFbPageReviews[]> {
+    try {
+      const { data } = await fbRequest.get(`${pageId}/ratings`, {
+        params: {
+          access_token
+        }
+      });
+      return data.data;
+    } catch (error: any) {
+      const errorMessage = error?.response?.data?.error?.message || error;
+      throw new Error(
+        "Uh oh!, failed get page Details. Error details: " + errorMessage
+      );
+    }
+  }
+
   static async pageLikes(
     pageId: string,
     pageAccessToken: string,

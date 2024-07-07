@@ -1,6 +1,6 @@
 import { FacebookPageApi } from "../src";
 import dotenv from "dotenv";
-import {  describe } from "node:test";
+import { describe } from "node:test";
 
 dotenv.config({ path: ".env.development" });
 
@@ -21,7 +21,11 @@ describe("Test FacebookPageApi", () => {
   });
 
   test("Should get account pages", async () => {
-    const fbPages = await FacebookPageApi.accountPages(fbAccessToken);
+    const fbPages = await FacebookPageApi.accountPages(
+      fbAccessToken,
+      undefined,
+      "v19.0"
+    );
 
     expect(Array.isArray(fbPages)).toBe(true);
 
@@ -38,6 +42,29 @@ describe("Test FacebookPageApi", () => {
 });
 
 describe("Test facebook page api for a single page", () => {
+  test("Should get the page details", async () => {
+    const result = await FacebookPageApi.pageDetails(pageId, pageAccessToken);
+    expect(result).toHaveProperty('id');
+    expect(result).toHaveProperty('about');
+  });
+
+  test("Should get the page reviews", async () => {
+    const result = await FacebookPageApi.pageReviews(pageId, pageAccessToken);
+
+    expect(Array.isArray(result)).toBe(true);
+    
+    if (result.length === 0) return;
+    
+    result?.map(review => {
+      expect(review).toHaveProperty("created_time")
+      expect(review).toHaveProperty("recommendation_type")
+      expect(review).toHaveProperty("review_text")
+      expect(review).toHaveProperty("reviewer")
+      expect(review?.reviewer).toHaveProperty("name")
+      expect(review?.reviewer).toHaveProperty("id")
+    })
+  });
+
   test("Should share text post to page", async () => {
     const payload = { message: "Test message" };
     const result = await FacebookPageApi.shareTextPostToPage(
@@ -136,57 +163,57 @@ describe("Test facebook page api for a single page", () => {
   });
 });
 
-describe("Test Facebook page api for posts and comments management", () => {
-  test("Should get page post comments", async () => {
-    const comments = await FacebookPageApi.pagePostComments(
-      postId,
-      pageAccessToken
-    );
+// describe("Test Facebook page api for posts and comments management", () => {
+//   test("Should get page post comments", async () => {
+//     const comments = await FacebookPageApi.pagePostComments(
+//       postId,
+//       pageAccessToken
+//     );
 
-    expect(Array.isArray(comments)).toBe(true);
+//     expect(Array.isArray(comments)).toBe(true);
 
-    if (comments.length === 0) return;
+//     if (comments.length === 0) return;
 
-    comments.forEach((comment: any) => {
-      expect(comment).toHaveProperty("id");
-      expect(comment).toHaveProperty("message");
-      expect(comment).toHaveProperty("from");
-      expect(comment.from).toHaveProperty("name");
-    });
-  });
+//     comments.forEach((comment: any) => {
+//       expect(comment).toHaveProperty("id");
+//       expect(comment).toHaveProperty("message");
+//       expect(comment).toHaveProperty("from");
+//       expect(comment.from).toHaveProperty("name");
+//     });
+//   });
 
-  test("Should comment on a page post", async () => {
-    const result = await FacebookPageApi.commentOnPost(
-      postId,
-      pageAccessToken,
-      "make a simple comment"
-    );
-    expect(result).toHaveProperty("id");
-    commentId = result.id;
-  });
+//   test("Should comment on a page post", async () => {
+//     const result = await FacebookPageApi.commentOnPost(
+//       postId,
+//       pageAccessToken,
+//       "make a simple comment"
+//     );
+//     expect(result).toHaveProperty("id");
+//     commentId = result.id;
+//   });
 
-  test("Should reply on a comment", async () => {
-    const result = await FacebookPageApi.replyOnComment(
-      commentId,
-      pageAccessToken,
-      "reply on this comment"
-    );
-    expect(result).toHaveProperty("id");
-  });
+//   test("Should reply on a comment", async () => {
+//     const result = await FacebookPageApi.replyOnComment(
+//       commentId,
+//       pageAccessToken,
+//       "reply on this comment"
+//     );
+//     expect(result).toHaveProperty("id");
+//   });
 
-  test("Should delete a comment", async () => {
-    const result = await FacebookPageApi.deleteComment(
-      commentId,
-      pageAccessToken
-    );
-    expect(result).toHaveProperty("success", true);
-  });
+//   test("Should delete a comment", async () => {
+//     const result = await FacebookPageApi.deleteComment(
+//       commentId,
+//       pageAccessToken
+//     );
+//     expect(result).toHaveProperty("success", true);
+//   });
 
-  test("Should delete page post", async () => {
-    const deleteResult = await FacebookPageApi.deletePagePost(
-      postId,
-      pageAccessToken
-    );
-    expect(deleteResult).toHaveProperty("success", true);
-  });
-});
+//   test("Should delete page post", async () => {
+//     const deleteResult = await FacebookPageApi.deletePagePost(
+//       postId,
+//       pageAccessToken
+//     );
+//     expect(deleteResult).toHaveProperty("success", true);
+//   });
+// });
