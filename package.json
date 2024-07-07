@@ -1,6 +1,6 @@
 {
   "name": "@achchiraj/facebook-api",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "simplify the interaction with facebook api graph",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
