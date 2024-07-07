@@ -38,7 +38,7 @@ app.listen(3000, () => {
 
 ## Available Functions
 
-#### Personal Account Functions :
+### Personal Account Functions :
 
 ```javascript
 exchangeToken(shortAccessToken: string, version?: string)
@@ -69,7 +69,7 @@ Get information about the Facebook pages associated with the user.
 - `fields`: Fields to retrieve (default: "picture, category_list,category, tasks, name, access_token").
 - `version`: version of the api (default: 'v20.0')
 
-#### Facebook Page Functions :
+### Facebook Page Functions :
 
 ```javascript
 pageDetails(pageId: string, pageAccessToken: string, fields?: string)
@@ -152,7 +152,7 @@ Get weekly statistics for a Facebook page.
 - `metric`: Metrics to retrieve (default: "page_post_engagements,page_impressions, page_daily_follows_unique").
 - `version`: version of the api (default: 'v20.0')
 
-#### Facebook Page Posts Functions :
+### Facebook Page Posts Functions :
 
 ```javascript
 shareTextPostToPage(pageAccessToken: string, payload: ITextPostFbPayload, pageId: string, version?: string)
@@ -209,7 +209,7 @@ Delete a post from a Facebook page.
 - `pageAccessToken`: Access token of the page.
 - `version`: version of the api (default: 'v20.0')
 
-#### Facebook Page Post Comments Functions :
+### Facebook Page Post Comments Functions :
 
 ```javascript
 pagePostComments(pagePostId: string, pageAccessToken: string, fields?: string, version?: string)
