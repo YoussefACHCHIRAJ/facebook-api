@@ -65,6 +65,49 @@ describe("Test facebook page api for a single page", () => {
     })
   });
 
+  test("Should get page likes", async () => {
+    const likesCount = await FacebookPageApi.pageLikes(pageId, pageAccessToken);
+    expect(Number.isInteger(likesCount)).toBe(true);
+  });
+
+  test("Should get page analytics", async () => {
+    const analytics = await FacebookPageApi.pageAnalytics(
+      pageId,
+      pageAccessToken
+    );
+    // Add your assertions here based on the response structure
+    expect(Array.isArray(analytics)).toBe(true);
+
+    if (analytics.length === 0) return;
+
+    analytics.forEach((analytic: any) => {
+      expect(analytic).toHaveProperty("name");
+      expect(analytic).toHaveProperty("period");
+      expect(analytic).toHaveProperty("values");
+      expect(Array.isArray(analytic.values)).toBe(true);
+    });
+  });
+
+  test("Should get page weekly stats", async () => {
+    const weeklyStats = await FacebookPageApi.pageWeeklyStats(
+      pageId,
+      pageAccessToken
+    );
+    // Add your assertions here based on the response structure
+    expect(Array.isArray(weeklyStats)).toBe(true);
+
+    if (weeklyStats.length === 0) return;
+
+    weeklyStats.forEach((analytic: any) => {
+      expect(analytic).toHaveProperty("name");
+      expect(analytic).toHaveProperty("period");
+      expect(analytic).toHaveProperty("values");
+      expect(Array.isArray(analytic.values)).toBe(true);
+    });
+  });
+});
+
+describe("Test Facebook page api for posts and comments management", () => {
   test("Should share text post to page", async () => {
     const payload = { message: "Test message" };
     const result = await FacebookPageApi.shareTextPostToPage(
@@ -120,100 +163,57 @@ describe("Test facebook page api for a single page", () => {
       expect(pagePost).toHaveProperty("created_time");
     });
   });
-
-  test("Should get page likes", async () => {
-    const likesCount = await FacebookPageApi.pageLikes(pageId, pageAccessToken);
-    expect(Number.isInteger(likesCount)).toBe(true);
-  });
-
-  test("Should get page analytics", async () => {
-    const analytics = await FacebookPageApi.pageAnalytics(
-      pageId,
+  
+  test("Should get page post comments", async () => {
+    const comments = await FacebookPageApi.pagePostComments(
+      postId,
       pageAccessToken
     );
-    // Add your assertions here based on the response structure
-    expect(Array.isArray(analytics)).toBe(true);
 
-    if (analytics.length === 0) return;
+    expect(Array.isArray(comments)).toBe(true);
 
-    analytics.forEach((analytic: any) => {
-      expect(analytic).toHaveProperty("name");
-      expect(analytic).toHaveProperty("period");
-      expect(analytic).toHaveProperty("values");
-      expect(Array.isArray(analytic.values)).toBe(true);
+    if (comments.length === 0) return;
+
+    comments.forEach((comment: any) => {
+      expect(comment).toHaveProperty("id");
+      expect(comment).toHaveProperty("message");
+      expect(comment).toHaveProperty("from");
+      expect(comment.from).toHaveProperty("name");
     });
   });
 
-  test("Should get page weekly stats", async () => {
-    const weeklyStats = await FacebookPageApi.pageWeeklyStats(
-      pageId,
+  test("Should comment on a page post", async () => {
+    const result = await FacebookPageApi.commentOnPost(
+      postId,
+      pageAccessToken,
+      "make a simple comment"
+    );
+    expect(result).toHaveProperty("id");
+    commentId = result.id;
+  });
+
+  test("Should reply on a comment", async () => {
+    const result = await FacebookPageApi.replyOnComment(
+      commentId,
+      pageAccessToken,
+      "reply on this comment"
+    );
+    expect(result).toHaveProperty("id");
+  });
+
+  test("Should delete a comment", async () => {
+    const result = await FacebookPageApi.deleteComment(
+      commentId,
       pageAccessToken
     );
-    // Add your assertions here based on the response structure
-    expect(Array.isArray(weeklyStats)).toBe(true);
+    expect(result).toHaveProperty("success", true);
+  });
 
-    if (weeklyStats.length === 0) return;
-
-    weeklyStats.forEach((analytic: any) => {
-      expect(analytic).toHaveProperty("name");
-      expect(analytic).toHaveProperty("period");
-      expect(analytic).toHaveProperty("values");
-      expect(Array.isArray(analytic.values)).toBe(true);
-    });
+  test("Should delete page post", async () => {
+    const deleteResult = await FacebookPageApi.deletePagePost(
+      postId,
+      pageAccessToken
+    );
+    expect(deleteResult).toHaveProperty("success", true);
   });
 });
-
-// describe("Test Facebook page api for posts and comments management", () => {
-//   test("Should get page post comments", async () => {
-//     const comments = await FacebookPageApi.pagePostComments(
-//       postId,
-//       pageAccessToken
-//     );
-
-//     expect(Array.isArray(comments)).toBe(true);
-
-//     if (comments.length === 0) return;
-
-//     comments.forEach((comment: any) => {
-//       expect(comment).toHaveProperty("id");
-//       expect(comment).toHaveProperty("message");
-//       expect(comment).toHaveProperty("from");
-//       expect(comment.from).toHaveProperty("name");
-//     });
-//   });
-
-//   test("Should comment on a page post", async () => {
-//     const result = await FacebookPageApi.commentOnPost(
-//       postId,
-//       pageAccessToken,
-//       "make a simple comment"
-//     );
-//     expect(result).toHaveProperty("id");
-//     commentId = result.id;
-//   });
-
-//   test("Should reply on a comment", async () => {
-//     const result = await FacebookPageApi.replyOnComment(
-//       commentId,
-//       pageAccessToken,
-//       "reply on this comment"
-//     );
-//     expect(result).toHaveProperty("id");
-//   });
-
-//   test("Should delete a comment", async () => {
-//     const result = await FacebookPageApi.deleteComment(
-//       commentId,
-//       pageAccessToken
-//     );
-//     expect(result).toHaveProperty("success", true);
-//   });
-
-//   test("Should delete page post", async () => {
-//     const deleteResult = await FacebookPageApi.deletePagePost(
-//       postId,
-//       pageAccessToken
-//     );
-//     expect(deleteResult).toHaveProperty("success", true);
-//   });
-// });

@@ -15,13 +15,10 @@ npm install @achchiraj/facebook-api
 ```javascript
 const { FacebookPageApi } = require("@achchiraj/facebook-api");
 
-// Create an instance of FbPageApi
-// const fbApi = facebookPageApi('your-app-id', 'your-app-secret', 'optional-api-version');
-
 // Call the userInfo method with the access token
 const userInfos = await FacebookPageApi.userInfo(accessToken);
 // Log the user information to the console
-console.log(userInfos);
+console.log(userInfos); // example result: { name: 'random name', email: 'user@gmail.com' }
 
 // Call the accountPages method with the access token and the fields needed
 const facebookPages = await FacebookPageApi.accountPages(
@@ -29,11 +26,7 @@ const facebookPages = await FacebookPageApi.accountPages(
   "picture, name, access_token"
 );
 // Log the facebook pages
-console.log(facebookPages);
-
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
+console.log(facebookPages); // example result: { picture: 'picture_url', name: 'page name', access_token: 'sadfrgsgsrgirugwfuacndncaoefoaiefoeufheufghs' }
 ```
 
 ## Available Functions
@@ -172,6 +165,46 @@ const payload = {
   message: "Hello, world!",
   published: true,
   scheduled_publish_time: "2024-06-15T12:00:00Z",
+};
+```
+
+```javascript
+sharePicturePostToPage(pageAccessToken: string, payload: IPicturePostFbPayload, pageId: string, version?: string)
+```
+
+Share a text post to a Facebook page.
+
+- `pageAccessToken`: Access token of the page.
+- `payload`: Payload of the picture post.
+- `pageId`: ID of the page to post to.
+- `version`: version of the api (default: 'v20.0')
+
+Example:
+
+```javascript
+const payload = {
+  url: "picture_url",
+  published: true,
+  scheduled_publish_time: "2024-06-15T12:00:00Z",
+};
+```
+
+```javascript
+updateTextPostOfPage(pageAccessToken: string, payload: { message: string }, pageId: string, version?: string)
+```
+
+Share a text post to a Facebook page.
+
+- `pageAccessToken`: Access token of the page.
+- `payload`: Payload of the picture post.
+- `pageId`: ID of the page to post to.
+- `version`: version of the api (default: 'v20.0')
+
+Example:
+
+```javascript
+const payload = {
+  message: "picture_url",
 };
 ```
 

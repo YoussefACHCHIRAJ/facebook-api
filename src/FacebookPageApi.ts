@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IFbPageReviews, ITextPostFbPayload } from "./types/PageApi.types";
+import { IFbPageReviews, IPicturePostFbPayload, ITextPostFbPayload } from "./types/PageApi.types";
 import { PageInsightsDatePreset, PageInsightsPeriod } from "./enums";
 
 const fbRequest = axios.create({
@@ -10,7 +10,7 @@ const DEFAULT_API_VERSION = "v20.0";
 
 export class FacebookPageApi {
   //* start Personal account apis
-  static async exchangeToken(
+  public static async exchangeToken(
     shortAccessToken: string,
     app_id: string,
     app_secret: string,
@@ -76,13 +76,17 @@ export class FacebookPageApi {
   //* end Personal account apis
 
   //* start Facebook Page apis
-  static async pageDetails(pageId: string, access_token: string, fields: string = 'about,attire,bio,location,parking,hours,emails,website') {
+  static async pageDetails(
+    pageId: string,
+    access_token: string,
+    fields: string = "about,attire,bio,location,parking,hours,emails,website"
+  ) {
     try {
       const { data } = await fbRequest.get(`${pageId}`, {
         params: {
           fields,
-          access_token
-        }
+          access_token,
+        },
       });
       return data;
     } catch (error: any) {
@@ -93,12 +97,15 @@ export class FacebookPageApi {
     }
   }
 
-  static async pageReviews(pageId: string, access_token: string): Promise<IFbPageReviews[]> {
+  static async pageReviews(
+    pageId: string,
+    access_token: string
+  ): Promise<IFbPageReviews[]> {
     try {
       const { data } = await fbRequest.get(`${pageId}/ratings`, {
         params: {
-          access_token
-        }
+          access_token,
+        },
       });
       return data.data;
     } catch (error: any) {
@@ -193,7 +200,7 @@ export class FacebookPageApi {
     pageAccessToken: string,
     payload: ITextPostFbPayload,
     version: string = DEFAULT_API_VERSION
-  ) {
+  ): Promise<{ id: string }> {
     try {
       const { data } = await fbRequest.post(
         `${version}/${pageId}/feed`,
@@ -207,6 +214,74 @@ export class FacebookPageApi {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
         "Uh oh!, failed to share text post. Error details: " + errorMessage
+      );
+    }
+  }
+
+  static async sharePicturePostToPage(
+    pageId: string,
+    pageAccessToken: string,
+    payload: IPicturePostFbPayload,
+    version: string = DEFAULT_API_VERSION
+  ): Promise<{
+    id: string;
+    post_id: string;
+  }> {
+    try {
+      const { data } = await fbRequest.post(
+        `${version}/${pageId}/photos`,
+        payload,
+        {
+          params: { access_token: pageAccessToken },
+        }
+      );
+      return data;
+    } catch (error: any) {
+      const errorMessage = error?.response?.data?.error?.message || error;
+      throw new Error(
+        "Uh oh!, failed to share picture post. Error details: " + errorMessage
+      );
+    }
+  }
+
+  static async updateTextPostOfPage(
+    postId: string,
+    pageAccessToken: string,
+    payload: { message: string },
+    version: string = DEFAULT_API_VERSION
+  ): Promise<{
+    success: boolean;
+  }> {
+    try {
+      const { data } = await fbRequest.post(`${version}/${postId}`, payload, {
+        params: { access_token: pageAccessToken },
+      });
+      return data;
+    } catch (error: any) {
+      const errorMessage = error?.response?.data?.error?.message || error;
+      throw new Error(
+        "Uh oh!, failed to update this text post. Error details: " +
+          errorMessage
+      );
+    }
+  }
+
+  static async deletePagePost(
+    postId: string,
+    pageAccessToken: string,
+    version: string = DEFAULT_API_VERSION
+  ): Promise<{ success: boolean }> {
+    try {
+      const { data } = await fbRequest.delete(`${version}/${postId}`, {
+        params: {
+          access_token: pageAccessToken,
+        },
+      });
+      return data;
+    } catch (error: any) {
+      const errorMessage = error?.response?.data?.error?.message || error;
+      throw new Error(
+        "Uh oh!, failed delete page post. Error details: " + errorMessage
       );
     }
   }
@@ -285,26 +360,6 @@ export class FacebookPageApi {
       throw new Error(
         "Uh oh!, failed get page's scheduled posts. Error details: " +
           errorMessage
-      );
-    }
-  }
-
-  static async deletePagePost(
-    postId: string,
-    pageAccessToken: string,
-    version: string = DEFAULT_API_VERSION
-  ) {
-    try {
-      const { data } = await fbRequest.delete(`${version}/${postId}`, {
-        params: {
-          access_token: pageAccessToken,
-        },
-      });
-      return data;
-    } catch (error: any) {
-      const errorMessage = error?.response?.data?.error?.message || error;
-      throw new Error(
-        "Uh oh!, failed delete page post. Error details: " + errorMessage
       );
     }
   }
