@@ -1,4 +1,4 @@
-//* general page's types 
+//* general page's types
 export interface IFbPageReviews {
   created_time: string;
   recommendation_type: "positive" | "negative";
@@ -11,7 +11,6 @@ export interface IFbPageReviews {
 
 
 //* post's types
-
 interface IBasePostFbPayload {
   published?: boolean;
   scheduled_publish_time?: string;
@@ -22,5 +21,5 @@ export interface ITextPostFbPayload extends IBasePostFbPayload {
 }
 
 export interface IPicturePostFbPayload extends IBasePostFbPayload {
-  url: string
+  url: string;
 }

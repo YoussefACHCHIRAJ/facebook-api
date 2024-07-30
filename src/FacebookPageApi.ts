@@ -111,7 +111,7 @@ export class FacebookPageApi {
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
-        "Uh oh!, failed get page Details. Error details: " + errorMessage
+        "Uh oh!, failed get page Reviews. Error details: " + errorMessage
       );
     }
   }
