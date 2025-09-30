@@ -4,7 +4,10 @@
   "description": "simplify the interaction with facebook api graph",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
-  "repository": "https://github.com/YoussefACHCHIRAJ/facebook-api.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YoussefACHCHIRAJ/facebook-api.git"
+  },
   "publishConfig": {
     "access": "public"
   },
