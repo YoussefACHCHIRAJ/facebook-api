@@ -1,4 +1,4 @@
-import { FacebookPageApi } from "../src";
+import { FacebookPageApi, PageInsightsDatePreset } from "../src";
 import dotenv from "dotenv";
 import { describe } from "node:test";
 
@@ -12,6 +12,7 @@ let pageId: string;
 let pageAccessToken: string;
 
 jest.setTimeout(30000);
+
 
 describe("Test FacebookPageApi", () => {
   test("Should get user info", async () => {
