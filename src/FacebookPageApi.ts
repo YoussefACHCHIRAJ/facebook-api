@@ -17,7 +17,7 @@ export class FacebookPageApi {
     version: string = DEFAULT_API_VERSION
   ) {
     try {
-      const { data } = await fbRequest.get(`${version}/oauth/access_token`, {
+      const { data } = await fbRequest.get(`/oauth/access_token`, {
         params: {
           grant_type: "fb_exchange_token",
           client_id: app_id,
@@ -25,11 +25,13 @@ export class FacebookPageApi {
           fb_exchange_token: shortAccessToken,
         },
       });
+      
+      
       return data;
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
-        "Uh oh!, failed exchange short access token. Error details: " +
+        "Oops!, failed exchange short access token. Error details: " +
           errorMessage
       );
     }
