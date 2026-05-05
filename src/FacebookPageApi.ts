@@ -1,5 +1,9 @@
 import axios from "axios";
-import { IFbPageReviews, IPicturePostFbPayload, ITextPostFbPayload } from "./types/PageApi.types";
+import {
+  IFbPageReviews,
+  IPicturePostFbPayload,
+  ITextPostFbPayload,
+} from "./types/PageApi.types";
 import { PageInsightsDatePreset, PageInsightsPeriod } from "./enums";
 
 const fbRequest = axios.create({
@@ -14,7 +18,7 @@ export class FacebookPageApi {
     shortAccessToken: string,
     app_id: string,
     app_secret: string,
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ) {
     try {
       const { data } = await fbRequest.get(`/oauth/access_token`, {
@@ -25,14 +29,13 @@ export class FacebookPageApi {
           fb_exchange_token: shortAccessToken,
         },
       });
-      
-      
+
       return data;
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
         "Oops!, failed exchange short access token. Error details: " +
-          errorMessage
+          errorMessage,
       );
     }
   }
@@ -40,17 +43,17 @@ export class FacebookPageApi {
   static async userInfo(
     accessToken: string,
     fields: string = "name,picture",
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ) {
     try {
-      const { data } = await fbRequest.get(`${version}/me`, {
+      const { data } = await fbRequest.get(`/me`, {
         params: { access_token: accessToken, fields },
       });
       return data;
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
-        "Uh oh!, failed get user info. Error details: " + errorMessage
+        "Uh oh!, failed get user info. Error details: " + errorMessage,
       );
     }
   }
@@ -58,10 +61,10 @@ export class FacebookPageApi {
   static async accountPages(
     access_token: string,
     fields: string = "picture, category_list,category, tasks, name, access_token",
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ) {
     try {
-      const { data } = await fbRequest.get(`${version}/me/accounts`, {
+      const { data } = await fbRequest.get(`/me/accounts`, {
         params: {
           access_token,
           fields,
@@ -71,7 +74,7 @@ export class FacebookPageApi {
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
-        "Uh oh!, failed get pages infos. Error details: " + errorMessage
+        "Uh oh!, failed get pages infos. Error details: " + errorMessage,
       );
     }
   }
@@ -81,7 +84,7 @@ export class FacebookPageApi {
   static async pageDetails(
     pageId: string,
     access_token: string,
-    fields: string = "about,attire,bio,location,parking,hours,emails,website"
+    fields: string = "about,attire,bio,location,parking,hours,emails,website",
   ) {
     try {
       const { data } = await fbRequest.get(`${pageId}`, {
@@ -94,14 +97,14 @@ export class FacebookPageApi {
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
-        "Uh oh!, failed get page Details. Error details: " + errorMessage
+        "Uh oh!, failed get page Details. Error details: " + errorMessage,
       );
     }
   }
 
   static async pageReviews(
     pageId: string,
-    access_token: string
+    access_token: string,
   ): Promise<IFbPageReviews[]> {
     try {
       const { data } = await fbRequest.get(`${pageId}/ratings`, {
@@ -113,7 +116,7 @@ export class FacebookPageApi {
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
-        "Uh oh!, failed get page Reviews. Error details: " + errorMessage
+        "Uh oh!, failed get page Reviews. Error details: " + errorMessage,
       );
     }
   }
@@ -121,12 +124,12 @@ export class FacebookPageApi {
   static async pageLikes(
     pageId: string,
     pageAccessToken: string,
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ) {
     try {
       const {
         data: { fan_count },
-      } = await fbRequest.get(`${version}/${pageId}`, {
+      } = await fbRequest.get(`/${pageId}`, {
         params: {
           access_token: pageAccessToken,
           fields: "fan_count",
@@ -136,7 +139,7 @@ export class FacebookPageApi {
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
-        "Uh oh!, failed get page likes count. Error details: " + errorMessage
+        "Uh oh!, failed get page likes count. Error details: " + errorMessage,
       );
     }
   }
@@ -146,24 +149,24 @@ export class FacebookPageApi {
     pageAccessToken: string,
     date_preset: PageInsightsDatePreset = PageInsightsDatePreset.this_year,
     period: PageInsightsPeriod = PageInsightsPeriod.month,
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ) {
     try {
       const { data } = await fbRequest.get(
-        `${version}/${pageId}/insights/page_impressions_unique`,
+        `/${pageId}/insights/page_impressions_unique`,
         {
           params: {
             access_token: pageAccessToken,
             date_preset,
             period,
           },
-        }
+        },
       );
       return data.data;
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
-        "Uh oh!, failed get page's analytics. Error details: " + errorMessage
+        "Uh oh!, failed get page's analytics. Error details: " + errorMessage,
       );
     }
   }
@@ -173,11 +176,11 @@ export class FacebookPageApi {
     pageAccessToken: string,
     date_preset: PageInsightsDatePreset = PageInsightsDatePreset.last_week_mon_sun,
     period: PageInsightsPeriod = PageInsightsPeriod.day,
-    metric: string = "page_post_engagements,page_impressions,page_daily_follows_unique",
-    version: string = DEFAULT_API_VERSION
+    metric: string = "page_follows,page_impressions_unique,page_post_engagements",
+    version: string = DEFAULT_API_VERSION,
   ) {
     try {
-      const { data } = await fbRequest.get(`${version}/${pageId}/insights`, {
+      const { data } = await fbRequest.get(`/${pageId}/insights`, {
         params: {
           access_token: pageAccessToken,
           date_preset,
@@ -185,11 +188,13 @@ export class FacebookPageApi {
           metric,
         },
       });
+
       return data.data;
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
-        "Uh oh!, failed get page's weekly stats. Error details: " + errorMessage
+        "Uh oh!, failed get page's weekly stats. Error details: " +
+          errorMessage,
       );
     }
   }
@@ -201,21 +206,17 @@ export class FacebookPageApi {
     pageId: string,
     pageAccessToken: string,
     payload: ITextPostFbPayload,
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ): Promise<{ id: string }> {
     try {
-      const { data } = await fbRequest.post(
-        `${version}/${pageId}/feed`,
-        payload,
-        {
-          params: { access_token: pageAccessToken },
-        }
-      );
+      const { data } = await fbRequest.post(`/${pageId}/feed`, payload, {
+        params: { access_token: pageAccessToken },
+      });
       return data;
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
-        "Uh oh!, failed to share text post. Error details: " + errorMessage
+        "Uh oh!, failed to share text post. Error details: " + errorMessage,
       );
     }
   }
@@ -224,24 +225,20 @@ export class FacebookPageApi {
     pageId: string,
     pageAccessToken: string,
     payload: IPicturePostFbPayload,
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ): Promise<{
     id: string;
     post_id: string;
   }> {
     try {
-      const { data } = await fbRequest.post(
-        `${version}/${pageId}/photos`,
-        payload,
-        {
-          params: { access_token: pageAccessToken },
-        }
-      );
+      const { data } = await fbRequest.post(`/${pageId}/photos`, payload, {
+        params: { access_token: pageAccessToken },
+      });
       return data;
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
-        "Uh oh!, failed to share picture post. Error details: " + errorMessage
+        "Uh oh!, failed to share picture post. Error details: " + errorMessage,
       );
     }
   }
@@ -250,12 +247,12 @@ export class FacebookPageApi {
     postId: string,
     pageAccessToken: string,
     payload: { message: string },
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ): Promise<{
     success: boolean;
   }> {
     try {
-      const { data } = await fbRequest.post(`${version}/${postId}`, payload, {
+      const { data } = await fbRequest.post(`/${postId}`, payload, {
         params: { access_token: pageAccessToken },
       });
       return data;
@@ -263,7 +260,7 @@ export class FacebookPageApi {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
         "Uh oh!, failed to update this text post. Error details: " +
-          errorMessage
+          errorMessage,
       );
     }
   }
@@ -271,10 +268,10 @@ export class FacebookPageApi {
   static async deletePagePost(
     postId: string,
     pageAccessToken: string,
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ): Promise<{ success: boolean }> {
     try {
-      const { data } = await fbRequest.delete(`${version}/${postId}`, {
+      const { data } = await fbRequest.delete(`/${postId}`, {
         params: {
           access_token: pageAccessToken,
         },
@@ -283,7 +280,7 @@ export class FacebookPageApi {
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
-        "Uh oh!, failed delete page post. Error details: " + errorMessage
+        "Uh oh!, failed delete page post. Error details: " + errorMessage,
       );
     }
   }
@@ -294,10 +291,10 @@ export class FacebookPageApi {
     date_preset: PageInsightsDatePreset = PageInsightsDatePreset.this_year,
     period: PageInsightsPeriod = PageInsightsPeriod.week,
     metric: string = "page_actions_post_reactions_like_total, page_actions_post_reactions_love_total, page_actions_post_reactions_wow_total",
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ) {
     try {
-      const { data } = await fbRequest.get(`${version}/${pageId}/insights`, {
+      const { data } = await fbRequest.get(`/${pageId}/insights`, {
         params: {
           access_token: pageAccessToken,
           metric,
@@ -311,7 +308,7 @@ export class FacebookPageApi {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
         "Uh oh!, failed get page post's reactions. Error details: " +
-          errorMessage
+          errorMessage,
       );
     }
   }
@@ -320,10 +317,10 @@ export class FacebookPageApi {
     pageId: string,
     pageAccessToken: string,
     fields: string = "full_picture,message,permalink_url,created_time,likes.summary(true),comments.summary(true),shares",
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ) {
     try {
-      const { data } = await fbRequest.get(`${version}/${pageId}/feed`, {
+      const { data } = await fbRequest.get(`/${pageId}/feed`, {
         params: {
           access_token: pageAccessToken,
           fields,
@@ -334,7 +331,7 @@ export class FacebookPageApi {
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
-        "Uh oh!, failed get page's posts. Error details: " + errorMessage
+        "Uh oh!, failed get page's posts. Error details: " + errorMessage,
       );
     }
   }
@@ -343,25 +340,22 @@ export class FacebookPageApi {
     pageId: string,
     pageAccessToken: string,
     fields: string = "full_picture,message,permalink_url,created_time, likes.summary(true),comments.summary(true),shares",
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ) {
     try {
-      const { data } = await fbRequest.get(
-        `${version}/${pageId}/scheduled_posts`,
-        {
-          params: {
-            access_token: pageAccessToken,
-            fields,
-          },
-        }
-      );
+      const { data } = await fbRequest.get(`/${pageId}/scheduled_posts`, {
+        params: {
+          access_token: pageAccessToken,
+          fields,
+        },
+      });
 
       return data.data;
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
         "Uh oh!, failed get page's scheduled posts. Error details: " +
-          errorMessage
+          errorMessage,
       );
     }
   }
@@ -372,24 +366,21 @@ export class FacebookPageApi {
     pagePostId: string,
     pageAccessToken: string,
     fields: string = "from,message",
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ) {
     try {
-      const { data } = await fbRequest.get(
-        `${version}/${pagePostId}/comments`,
-        {
-          params: {
-            fields,
-            access_token: pageAccessToken,
-          },
-        }
-      );
+      const { data } = await fbRequest.get(`/${pagePostId}/comments`, {
+        params: {
+          fields,
+          access_token: pageAccessToken,
+        },
+      });
       return data.data;
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
         "Uh oh!, failed get comments of this post. Error details: " +
-          errorMessage
+          errorMessage,
       );
     }
   }
@@ -398,24 +389,24 @@ export class FacebookPageApi {
     pagePostId: string,
     pageAccessToken: string,
     comment: string,
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ) {
     try {
       const { data } = await fbRequest.post(
-        `${version}/${pagePostId}/comments`,
+        `/${pagePostId}/comments`,
         { message: comment },
         {
           params: {
             access_token: pageAccessToken,
           },
-        }
+        },
       );
       return data;
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
         "Uh oh!, failed failed to comment on this post. Error details: " +
-          errorMessage
+          errorMessage,
       );
     }
   }
@@ -423,10 +414,10 @@ export class FacebookPageApi {
   static async deleteComment(
     commentId: string,
     pageAccessToken: string,
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ) {
     try {
-      const { data } = await fbRequest.delete(`${version}/${commentId}`, {
+      const { data } = await fbRequest.delete(`/${commentId}`, {
         params: {
           access_token: pageAccessToken,
         },
@@ -435,7 +426,7 @@ export class FacebookPageApi {
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
-        "Uh oh!, failed delete this comment. Error details: " + errorMessage
+        "Uh oh!, failed delete this comment. Error details: " + errorMessage,
       );
     }
   }
@@ -444,24 +435,24 @@ export class FacebookPageApi {
     commentId: string,
     pageAccessToken: string,
     reply: string,
-    version: string = DEFAULT_API_VERSION
+    version: string = DEFAULT_API_VERSION,
   ) {
     try {
       const { data } = await fbRequest.post(
-        `${version}/${commentId}/comments`,
+        `/${commentId}/comments`,
         { message: reply },
         {
           params: {
             access_token: pageAccessToken,
           },
-        }
+        },
       );
       return data;
     } catch (error: any) {
       const errorMessage = error?.response?.data?.error?.message || error;
       throw new Error(
         "Uh oh!, failed failed to reply on this comment. Error details: " +
-          errorMessage
+          errorMessage,
       );
     }
   }
